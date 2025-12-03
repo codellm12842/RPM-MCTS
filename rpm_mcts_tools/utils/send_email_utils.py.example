@@ -1,0 +1,31 @@
+from cilog import create_logger
+
+
+# 以下信息已经过数据脱敏
+mail_setting = {
+    'mailhost': ('smtp.qq.com', 587),  # 邮件服务器host，端口
+    'fromaddr': '***@qq.com',  # 发件人邮箱
+    'toaddrs': ['***@qq.com', '***@qq.com'],  # 收件人邮箱，可多个
+    'subject': 'CiLog title',  # 邮件主题
+    'credentials': ('***@qq.com', '***'),  # 发件人邮箱，授权码
+    'secure': (),  # 安全协议，无需修改
+    'timeout': 10.0,  # 超时时间，无需修改
+}
+
+logger = create_logger(
+    name='logmail',
+    use_color=False,
+    enable_mail=True,
+    mail_setting=mail_setting
+)
+
+def send_email(message):
+    logger.mail(message)
+
+
+if __name__ == '__main__':
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-m', '--message', type=str, default="This is a test email")
+    args = parser.parse_args()
+    send_email(args.message)

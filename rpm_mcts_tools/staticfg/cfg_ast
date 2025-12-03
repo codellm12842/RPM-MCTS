@@ -1,0 +1,31 @@
+digraph clusterblock {
+	graph [label=block]
+	1 [label="def bell_Number(n):...
+"]
+	subgraph clusterbell_Number {
+		graph [label=bell_Number]
+		3 [label="bell = [[(0) for i in range(n + 1)] for j in range(n + 1)]
+bell[0][0] = 1
+"]
+		"3_calls" [label="range
+range" shape=box]
+		3 -> "3_calls" [label=calls style=dashed]
+		4 [label="for i in range(1, n + 1):
+"]
+		5 [label="bell[i][0] = bell[i - 1][i - 1]
+"]
+		7 [label="for j in range(1, i + 1):
+"]
+		8 [label="bell[i][j] = bell[i - 1][j - 1] + bell[i][j - 1]
+"]
+		8 -> 7 [label=""]
+		7 -> 8 [label="range(1, i + 1)"]
+		7 -> 4 [label=""]
+		5 -> 7 [label=""]
+		4 -> 5 [label="range(1, n + 1)"]
+		6 [label="return bell[n][0]
+"]
+		4 -> 6 [label=""]
+		3 -> 4 [label=""]
+	}
+}

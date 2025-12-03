@@ -1,0 +1,12 @@
+.idea/
+.vscode/
+__pycache__/
+rpm_mcts_tools.egg-info/
+output/
+
+**.log
+**.out
+.env
+.DS_Store
+
+rpm_mcts_tools/utils/send_email_utils.py

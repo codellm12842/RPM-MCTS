@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rpm_mcts_tools"
+version = "0.1.0"
+dependencies = [
+    "astor",
+    "astpretty",
+    "astroid",
+    "astunparse",
+    "backoff",
+    "cilog",
+    "datasets",
+    "graphviz",
+    "huggingface-hub",
+    "jq",
+    "jsonlines",
+    "langchain",
+    "langchain_chroma",
+    "langchain_community",
+    "langchain_huggingface",
+    "numpy",
+    "openai",
+    "python-dotenv",
+    "sentence-transformers",
+    "tiktoken",
+    "tqdm",
+    "transformers",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["rpm_mcts_tools*"]
+namespaces = true
