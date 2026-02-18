@@ -39,6 +39,9 @@ def main(args):
     if args.method == "base-llm":
         from base_llm import base_llm
         base_llm.main(args)
+    if args.method == "CoT":
+        from CoT import cot
+        cot.main(args)
     elif args.method == "SRA-MCTS":
         run_mcts = __import__('SRA-MCTS.run_mcts', fromlist=['main'])
         run_mcts.main(args)
