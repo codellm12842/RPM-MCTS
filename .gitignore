@@ -2,7 +2,6 @@
 .vscode/
 __pycache__/
 rpm_mcts_tools.egg-info/
-output/
 
 **.log
 **.out

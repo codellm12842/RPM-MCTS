@@ -12,7 +12,6 @@ method="rpm-mcts"
 base_model="qwen3-235b-a22b"
 suffix="_v1"
 max_workers=20
-send_email=false
 save_intermediate=false
 
 
@@ -37,7 +36,6 @@ do
         --output_code_path "$output_code_path" \
         --eval_result_path "$eval_result_path" \
         --max_workers $max_workers \
-        --send_email $send_email \
         --save_intermediate $save_intermediate \
         --rollout 5 \
         > "$log_path" 2>&1 &
@@ -57,6 +55,6 @@ do
     wait $pid
 done
 
-python ../src/utils/send_email_utils.py -m "${run_tag}运行完成"
+python ../rpm_mcts_tools/utils/send_email_utils.py -m "${run_tag}运行完成"
 
 python ../output/cal_avg_over_all_datasets.py --method "$method" --base_model "$base_model" --suffix "$suffix"
