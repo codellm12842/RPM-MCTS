@@ -21,6 +21,8 @@ def main(args):
     for dataset_name, num in dataset_nums.items():
         run_tag = f"{args.method}_{args.base_model}_{dataset_name}{args.suffix}"
         eval_result_path = f"./results_eval/{args.method}/{args.base_model}/{dataset_name}/eval_{run_tag}.jsonl"
+        if not os.path.exists(eval_result_path):
+            continue
         results = read_json(eval_result_path)
         samples = len(results)
         pass1 = count_solved(results)

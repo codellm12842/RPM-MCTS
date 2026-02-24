@@ -3,29 +3,27 @@ import sys
 import argparse
 import pprint
 
-from rpm_mcts_tools.utils.utils import read_json, extract_python_code, extract_output_from_llm_response
+from rpm_mcts_tools.utils.utils import read_json, extract_python_code
 from rpm_mcts_tools.utils.chat_models_api import ChatAPI
 from rpm_mcts_tools.utils.concurrent_processor import ConcurrentProcessor
 from rpm_mcts_tools.evaluate.evaluate_by_executor import evaluate
 
 
-sys_prompt = '''You are a professional code implementer. Solve the programming problem below by following a logical thought process and providing a complete implementation.
+sys_prompt = '''You are a professional code implementer. For the given programming problem, generate a step-by-step plan for solving it, followed by the corresponding Python code.
 
 **Problem:**
 {problem}
 
 **Rules:**
-1. Your response must start with a `<steps>` section where each logical step is prefixed with "Step N: ".
+1. Your response must start with a sequence of logical steps where each step is prefixed with "Step [number]: ".
 2. Provide the final Python code block at the end. You may import standard libraries (e.g., `import math`) as needed, but do not include a main function or execution boilerplate so the function can be called directly.
 3. Adhere strictly to the format and avoid any introductory or concluding conversational text.
 
 **Output format:**
-<steps>
 Step 1: ...
 Step 2: ...
 ...
 Step N: ...
-</steps>
 ```python
 # Your code here
 ```
@@ -45,12 +43,10 @@ def process_single_item(item_idx, item, **kwargs):
 
     # generate code
     prompt = sys_prompt.format(problem=problem)
-    response = model.generate(prompt, temperature=0.7, max_tokens=2048, n=1)[0]
+    response = model.generate(prompt, temperature=0.7)[0]
     code = extract_python_code(response)
-    res =  extract_output_from_llm_response(response, tags_to_extract=['steps'])
-    steps = res['steps']
 
-    item['steps'] = steps
+    item['response'] = response
     item["solution"] = code
     item['token_usage'] = {
         'input_token_num': model.prompt_tokens,
